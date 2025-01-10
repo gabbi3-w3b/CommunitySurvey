@@ -1,0 +1,19 @@
+community-survey/
+│
+├── index.html               # Welcome Page
+├── questionnaire.html       # Questionnaire Page
+├── results.html             # Results Page
+├── css/
+│   └── styles.css           # Custom styles
+├── js/
+│   ├── app.js               # General JavaScript functionality
+│   └── chart.js             # Chart rendering logic
+├── php/
+│   ├── submit.php           # Handles form submissions and stores data
+│   └── fetch_results.php    # Fetches aggregated results for the Results Page
+├── db/
+│   └── survey.sql           # Database schema
+├── assets/
+│   ├── images/              # Store images, if any
+│   └── icons/               # Store icons, if any
+└── README.md                # Project documentation
