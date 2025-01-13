@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Test Scores</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 90%;
+            margin: auto;
+        }
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        canvas {
+            max-width: 400px;
+            max-height: 300px;
+            margin: 20px;
+        }
+        /* Floating shapes with diverse shapes and animations */
+        .floating-shape {
+            position: absolute;
+            animation: float 6s infinite ease-in-out;
+        }
+        .floating-shape.square {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 99, 132, 0.5);
+            animation-duration: 8s;
+        }
+        .floating-shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 80px solid rgba(54, 162, 235, 0.5);
+            animation-duration: 5s;
+        }
+        .floating-shape:nth-child(1) { top: 10%; left: 15%; }
+        .floating-shape:nth-child(2) { top: 50%; right: 5%; }
+        .floating-shape:nth-child(3) { bottom: 10%; left: 20%; }
+        .floating-shape:nth-child(4) { top: 30%; left: 50%; }
+        .floating-shape:nth-child(5) { bottom: 30%; right: 30%; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating shapes of various types -->
+    <div class="floating-shape square"></div>
+    <div class="floating-shape triangle"></div>
+    <div class="floating-shape circle"></div>
+    <div class="floating-shape square"></div>
+    <div class="floating-shape triangle"></div>
+
+    <div class="container">
+        <h1>Student Test Scores</h1>
+        <div class="charts-container">
+            <canvas id="barChart"></canvas>
+            <canvas id="pieChart"></canvas>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const studentScores = {
+            labels: ['Student A', 'Student B', 'Student C', 'Student D', 'Student E'],
+            scores: [85, 70, 95, 60, 75],
+        };
+
+        // Bar Chart
+        new Chart(document.getElementById('barChart'), {
+            type: 'bar',
+            data: {
+                labels: studentScores.labels,
+                datasets: [{
+                    label: 'Test Scores (%)',
+                    data: studentScores.scores,
+                    backgroundColor: ['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d'],
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Bar Chart: Test Scores' },
+                },
+            },
+        });
+
+        // Pie Chart with tooltips and percentage labels
+        new Chart(document.getElementById('pieChart'), {
+            type: 'pie',
+            data: {
+                labels: studentScores.labels,
+                datasets: [{
+                    data: studentScores.scores,
+                    backgroundColor: ['#577590', '#4d908e', '#43aa8b', '#90be6d', '#f9c74f'],
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: 'Pie Chart: Score Distribution' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                let total = tooltipItem.dataset._meta[Object.keys(tooltipItem.dataset._meta)[0]].total;
+                                let currentValue = tooltipItem.raw;
+                                let percentage = Math.floor(((currentValue / total) * 100) + 0.5);         
+                                return `${tooltipItem.label}: ${percentage}%`;
+                            }
+                        }
+                    }
+                },
+            },
+        });
+
+        // Line Chart
+        new Chart(document.getElementById('lineChart'), {
+            type: 'line',
+            data: {
+                labels: studentScores.labels,
+                datasets: [{
+                    label: 'Test Scores (%)',
+                    data: studentScores.scores,
+                    borderColor: '#f8961e',
+                    fill: false,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: 'Line Chart: Score Trends' },
+                },
+            },
+        });
+    </script>
+</body>
+</html>
