@@ -77,6 +77,15 @@
         @media (max-width: 768px) {
             .floatingObj { width: 40px; height: 40px; }
         }
+        /* Modified Paragraph Style */
+        .questionnaire-container p {
+            color: #666; /* Subtle gray color for better readability */
+            font-size: x-small;/* Set a moderate font size */
+            line-height: 1.5; /* Provide better spacing */
+        }
+
+       
+
     </style>
 </head>
 <body>
@@ -88,27 +97,107 @@
     <!-- Questionnaire Form -->
     <div class="questionnaire-container">
         <h1>Community Survey Questions</h1>
-        <p>Your feedback is valuable! Please take a moment to answer the following questions.</p>
-        <form>
+        <p>Your feedback is valuable! Please take a moment to answer the following questions. <br>
+            Your data is safe with us. It will be measured in real-time, so please ensure the data you provide is correct.
+        </p>
+       
+        <form id="surveyForm">
+            <!--TO GPT: please modify this font it should not be too virbrant just a little not as significant as the ones above-->
+          
+
             <!-- Question 1 -->
             <div class="mb-4">
-                <label for="q1" class="form-label">1. How satisfied are you with our services?</label>
+                <label for="q1" class="form-label">1. What is your age range?</label>
                 <select id="q1" class="form-select" required>
                     <option value="" selected disabled>Choose one...</option>
-                    <option value="Very Satisfied">Very Satisfied</option>
-                    <option value="Satisfied">Satisfied</option>
-                    <option value="Neutral">Neutral</option>
-                    <option value="Dissatisfied">Dissatisfied</option>
+                    <option value="1-12">1-12</option>
+                    <option value="13-17">13-17</option>
+                    <option value="18-24">18-24</option>
+                    <option value="25+">25 and above</option>
                 </select>
             </div>
-            <!-- Question 2 -->
+
+            <!-- Question 2: Gender -->
             <div class="mb-4">
-                <label for="q2" class="form-label">2. What improvements would you like to see?</label>
-                <textarea id="q2" class="form-control" rows="4" placeholder="Type your answer here..."></textarea>
+                <label for="gender" class="form-label">2. Select your gender</label>
+                <select id="gender" name="gender" class="form-select" required>
+                    <option value="" selected disabled>Choose one...</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
             </div>
+
+
+            <!-- Question 3: Job Status -->
+            <div class="mb-4">
+                <label for="q3" class="form-label">3. Do you currently have a job?</label>
+                <select id="q3" class="form-select" onchange="toggleJobQuestions()" required>
+                    <option value="" selected disabled>Choose one...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Question 4: Job-related Question (Appears only if "Yes" is selected in Question 3) -->
+            <div id="jobQuestion" class="mb-4" style="display: none;">
+                <label for="q4" class="form-label">4. What type of job do you have?</label>
+                <input type="text" id="q4" class="form-control" placeholder="Enter your job type...">
+            </div>
+
+            <!--Question 5: if 'No' @Q3-->
+            <div id="ambitionDiv" class="mb-4" style="display: none;">
+                <label for="q5" class="form-label">4. What is your ambition?</label>
+                <input type="text" id="q5" class="form-control" placeholder="Describe your ambition...">
+            </div>
+            
+            <div id="countryDiv" class="mb-4">
+                <label for="q6" class="form-label">5. --Select country--</label>
+                <select name="country" id="country" class="form-select">
+                    <option value="" selected disabled>Select your country...</option>
+                    <option value="Nigeria" id="q6">Nigeria</option>
+                    <option value="Other"> Other </option>
+                </select>
+            </div>
+
+
             <!-- Submit Button -->
             <button type="submit" class="btn-options">Submit</button>
         </form>
     </div>
+
+    <div class="modal-footer">
+        <a class="btn btn-outline-warning" href="validation.html">Back</a>
+    </div>
+
+    <script>
+        // Function to toggle job-related question visibility based on job status
+        function toggleJobQuestions() {
+            var jobStatus = document.getElementById("q3").value;
+            var jobQuestion = document.getElementById("jobQuestion");
+            var ambitionDiv = document.getElementById("ambitionDiv");
+            /**var jobInput = document.getElementById("q4");
+            var ambitionInput = docment.getElementById("q5");*/
+
+            if (jobStatus === "Yes") {
+                jobQuestion.style.display = "block"; // Show the job question
+               // jobInput.disabled = false;
+                ambitionDiv.style.display = "none";
+               // ambitionInput.disabled = true
+
+            }
+            else if(jobStatus === "No"){
+                jobQuestion.style.display = "none";
+                ambitionDiv.style.display = "block";
+
+            }
+            else {
+                jobQuestion.style.display = "none"; // Hide the job question
+                ambitionDiv.style.display = "none";
+            }
+        }
+            
+    </script>
+
 </body>
 </html>
