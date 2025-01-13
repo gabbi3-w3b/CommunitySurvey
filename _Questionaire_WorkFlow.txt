@@ -29,3 +29,20 @@
 | or Results Page        |
 +------------------------+
 
+
+
+***************
+DATABASE TABLES
+***************
+
++--------------------+         +--------------------+
+|   Users Table      |         |    Responses Table |
++--------------------+         +--------------------+
+| user_id (PK)       |         | response_id (PK)    |
+| username           |         | user_id (FK)       |
+| email              |         | question_id        |
+| password (hashed)  |         | response           |
+| role (user/admin)  |         +--------------------+
++--------------------+
+
+
